@@ -1,1 +1,1 @@
-personal website
+My one-page personal website. Using [Vitejs](https://vitejs.dev) for a super minimal build flow & fully static. You can find the source for my old website [here](https://github.com/Egrodo/noahyamamoto.com.old).
