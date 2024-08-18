@@ -9,7 +9,7 @@ const config = {
 
   kit: {
     adapter: adapter({
-      edge: true, // Use Netlify Edge functions
+      edge: false,
 
       split: false,
     }),
