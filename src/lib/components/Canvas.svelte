@@ -1,29 +1,30 @@
-import React, { useState, useRef, useEffect } from 'react';
+<script lang="ts">
+  import { onMount } from "svelte";
 
-class Point {
-  x: number;
-  y: number;
-  lifetime: number;
+  let canvasElement: HTMLCanvasElement;
 
-  constructor(x: number, y: number) {
-    this.x = x;
-    this.y = y;
-    this.lifetime = 0;
+  class Point {
+    x: number;
+    y: number;
+    lifetime: number;
+
+    constructor(x: number, y: number) {
+      this.x = x;
+      this.y = y;
+      this.lifetime = 0;
+    }
   }
-}
 
-function Canvas() {
-  const [{ cHeight, cWidth }, setSize] = useState({ cHeight: 0, cWidth: 0 });
-  const canvasRef = useRef<HTMLCanvasElement>(null);
+  $: cHeight = 0;
+  $: cWidth = 0;
 
-  const startAnimation = () => {
-    const canvas = canvasRef.current;
-    if (canvas == null) {
+  function startAnimation() {
+    if (!canvasElement) {
       console.error("Canvas isn't defined?");
       return;
     }
-    const ctx = canvas.getContext('2d');
-    if (ctx == null) {
+    const ctx = canvasElement.getContext("2d");
+    if (!ctx) {
       console.error("Context isn't defined?");
       return;
     }
@@ -36,12 +37,15 @@ function Canvas() {
     };
 
     document.addEventListener(
-      'mousemove',
+      "mousemove",
       ({ clientX, clientY }) => {
-        const mousePosition = [clientX - canvas.offsetLeft, clientY - canvas.offsetTop];
+        const mousePosition = [
+          clientX - canvasElement.offsetLeft,
+          clientY - canvasElement.offsetTop,
+        ];
         addPoint(mousePosition[0], mousePosition[1]);
       },
-      false,
+      false
     );
 
     const animate = () => {
@@ -69,7 +73,7 @@ function Canvas() {
           const lifePercent = point.lifetime / duration;
           const spreadRate = 7 * (1 - lifePercent);
 
-          ctx.lineJoin = 'round';
+          ctx.lineJoin = "round";
           ctx.lineWidth = spreadRate;
 
           // As time increases decrease r and b, increase g to go from purple to green.
@@ -104,33 +108,27 @@ function Canvas() {
     };
 
     animate();
-  };
+  }
 
-  useEffect(() => {
+  onMount(() => {
     // Set height and width on load because if set in state body isn't defined yet.
-    setSize({
-      cHeight: document.body.clientHeight,
-      cWidth: document.body.clientWidth,
-    });
+    cHeight = document.body.clientHeight;
+    cWidth = document.body.clientWidth;
 
     window.addEventListener(
-      'resize',
+      "resize",
       () => {
-        setSize({
-          cHeight: document.body.clientHeight,
-          cWidth: document.body.clientWidth,
-        });
+        cHeight = document.body.clientHeight;
+        cWidth = document.body.clientWidth;
       },
-      false,
+      false
     );
 
     // If the device supports cursors, start animation.
-    if (matchMedia('(pointer:fine)').matches) {
+    if (matchMedia("(pointer:fine)").matches) {
       startAnimation();
     }
-  }, []);
+  });
+</script>
 
-  return <canvas ref={canvasRef} width={cWidth} height={cHeight} />;
-}
-
-export default Canvas;
+<canvas bind:this={canvasElement} width={cWidth} height={cHeight} />
