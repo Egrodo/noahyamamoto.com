@@ -1,3 +1,0 @@
-noahyamamoto.com
-
-svelte now!
