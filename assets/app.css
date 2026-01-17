@@ -1,0 +1,35 @@
+@import url("https://fonts.googleapis.com/css?family=Space+Mono|Work+Sans");
+
+* {
+  box-sizing: border-box;
+}
+
+*::selection {
+  background-color: #00a5c2;
+  color: #f3f3f3;
+}
+
+body {
+  color: white;
+  margin: 0;
+  padding: 0;
+  background-color: black;
+  font-family: "Work Sans", sans-serif;
+}
+
+canvas {
+  position: fixed;
+  top: 0;
+  left: 0;
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+p {
+  color: #b9b9b9;
+  padding: 0;
+  margin: 0;
+}
