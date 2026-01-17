@@ -64,6 +64,7 @@ p {
   width: 150px;
   height: 150px;
   border-radius: 100%;
+  user-select: none;
 }
 
 .introContainerText {
@@ -130,6 +131,10 @@ p {
   padding: 0.3rem 0;
 }
 
+.socialContainer {
+  user-select: none;
+}
+
 .socialLink {
   display: inline-block;
   padding: 0 0.5rem;
@@ -175,6 +180,7 @@ p {
 }
 
 .fancyLink:hover .fancyLinkText::after,
+.fancyLink:focus .fancyLinkText::after,
 .fancyLink:active .fancyLinkText::after {
   transform: scaleX(1);
 }
